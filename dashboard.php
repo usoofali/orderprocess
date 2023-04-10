@@ -11,6 +11,7 @@
 			<li><a href="orders.php">Orders</a></li>
 			<li><a href="about.php">About</a></li>
 			<li><a href="contact.php">Contact Us</a></li>
+			<li><a href="logout.php">Contact Us</a></li>
 		</ul>
 	</nav>
 	
