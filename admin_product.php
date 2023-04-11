@@ -31,7 +31,7 @@
 		<label for="available">Available:</label>
 		<input type="number" id="available" name="available" min="0" step="0.01" required><br>
 		
-		<label for="image">Available:</label>
+		<label for="image">Image:</label>
 		<input type="file" id="image" name="image" min="0" step="0.01" required><br>
 
 		<input type="submit" value="Create Product">
