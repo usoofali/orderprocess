@@ -32,8 +32,8 @@
 		if (mysqli_num_rows($result) > 0) {
 			// Display each order in a table
 			while ($row = mysqli_fetch_assoc($result)) {
-				$order_id = $row["order_id"];
-				$order_date = $row["order_date"];
+				$order_id = $row["id"];
+				$order_date = $row["created_at"];
 				$total_price = $row["total_price"];
 				
 				echo "<h2>Order #$order_id</h2>";
