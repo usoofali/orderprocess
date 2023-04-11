@@ -35,6 +35,7 @@
 					echo '<h2>' . $row['name'] . '</h2>';
 					echo '<p>' . $row['description'] . '</p>';
 					echo '<p>$' . $row['price'] . '</p>';
+					echo '<p>$' . $row['available'] . '</p>';
 					echo '<input type="number" min="1" name="quantity[' . $row['id'] . ']" value="1">';
 					echo '<input type="radio" name="selected_product" value="' . $row['id'] . '">';
 					echo '</div>';
