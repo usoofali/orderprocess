@@ -44,7 +44,7 @@
 		<!-- Your PHP code to retrieve and display product details goes here -->
     <?php
 // Connect to the database
-include(dbconnect.php);
+include("dbconnect.php");
 // Check for errors
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
