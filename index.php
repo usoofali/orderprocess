@@ -12,9 +12,9 @@ $errors = [];
 
 // Connect to database
 $servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "myDB";
+$username = "";
+$password = "";
+$dbname = "order";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
