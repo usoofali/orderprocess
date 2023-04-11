@@ -34,6 +34,7 @@
 			    // Insert the order items into the order_items table
 			    foreach ($_POST['selected_product'] as $product_id) {
 			    	$quantity = $_POST['quantity'][$product_id];
+				$price = 
 			    	$sql = "INSERT INTO order_items (order_id, product_id, quantity) VALUES ($order_id, $product_id, $quantity)";
 			    	mysqli_query($conn, $sql);
 			    }
