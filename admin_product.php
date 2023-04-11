@@ -27,6 +27,9 @@
 
 		<label for="price">Price:</label>
 		<input type="number" id="price" name="price" min="0" step="0.01" required><br>
+		
+		<label for="available">Available:</label>
+		<input type="number" id="available" name="available" min="0" step="0.01" required><br>
 
 		<input type="submit" value="Create Product">
 	</form>
@@ -39,6 +42,7 @@
 			<th>Name</th>
 			<th>Description</th>
 			<th>Price</th>
+			<th>Available</th>
 			<th>Actions</th>
 		</tr>
 		<!-- Your PHP code to retrieve and display product details goes here -->
@@ -66,7 +70,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 	echo "<td>" . $row['name'] . "</td>";
 	echo "<td>" . $row['description'] . "</td>";
 	echo "<td>" . $row['price'] . "</td>";
-  echo "<td>" . $row['avail'] . "</td>";
+  echo "<td>" . $row['available'] . "</td>";
 	echo "<td><a href='edit_product.php?id=" . $row['id'] . "'>Edit</a> | <a href='delete_product.php?id=" . $row['id'] . "'>Delete</a></td>";
 	echo "</tr>";
 }
