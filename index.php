@@ -11,12 +11,7 @@ if(isset($_SESSION['admin_id'])){
 $errors = [];
 
 // Connect to database
-$servername = "localhost";
-$username = "";
-$password = "";
-$dbname = "order";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+include('dbconnect.php');
 
 // User login
 if(isset($_POST['user_login'])){
@@ -40,7 +35,7 @@ if(isset($_POST['admin_login'])){
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $query = "SELECT * FROM admins WHERE email='$email' AND password='$password'";
+  $query = "SELECT * FROM users WHERE email='$email' AND password='$password' AND role='admin'";
   $result = mysqli_query($conn, $query);
   $admin = mysqli_fetch_assoc($result);
 
@@ -76,7 +71,7 @@ if(isset($_POST['user_signup'])){
 
   // Insert user into database
   if(count($errors) == 0){
-    $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password_1')";
+    $query = "INSERT INTO users (name, email, password,role) VALUES ('$name', '$email', '$password_1','user')";
     mysqli_query($conn, $query);
 
     $_SESSION['user_id'] = mysqli_insert_id($conn);
