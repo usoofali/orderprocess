@@ -18,6 +18,7 @@
 	<div class="container">
 		<h1>Payment</h1>
 		<?php
+			session_start();
 			// Connect to the database
 			include('dbconnect.php');
 			if (!$conn) {
@@ -25,7 +26,7 @@
 			}
 
 			// Insert the order information into the orders table
-			$user_id = 1; // replace with the actual user id
+			$user_id = $_SESSION['user_id'];; // replace with the actual user id
 			$sql = "INSERT INTO orders (user_id, status) VALUES ($user_id, 'paid')";
 			if (mysqli_query($conn, $sql)) {
 			    $order_id = mysqli_insert_id($conn);
