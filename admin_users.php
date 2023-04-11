@@ -1,13 +1,13 @@
 <?php
 // Start session and check if the user is authenticated as admin
 session_start();
-if (!isset($_SESSION['admin']) || empty($_SESSION['admin'])) {
-    header('Location: login.php');
+if (!isset($_SESSION['admin_id']) || empty($_SESSION['admin_id'])) {
+    header('Location: index.php');
     exit();
 }
 
 // Connect to the database
-$conn = mysqli_connect('localhost', 'username', 'password', 'order');
+include('dbconnect.php');
 
 // Fetch all records from the users table
 $query = "SELECT * FROM users";
@@ -59,7 +59,6 @@ $result = mysqli_query($conn, $query);
 		</tbody>
 	</table>
 	
-	<a href="add_user.php">Add User</a>
 	
 </body>
 </html>
