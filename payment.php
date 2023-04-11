@@ -39,11 +39,11 @@
 			    }
 
 			    // Update the order status to "complete"
-			    $sql = "UPDATE orders SET status='complete' WHERE id=$order_id";
-			    mysqli_query($conn, $sql);
+// 			    $sql = "UPDATE orders SET status='complete' WHERE id=$order_id";
+// 			    mysqli_query($conn, $sql);
 
 			    // Display a message to the user confirming the purchase
-			    echo '<p>Thank you for your purchase!</p>';
+			    echo '<p>Thank you for making the order!</p>';
 			} else {
 			    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 			}
