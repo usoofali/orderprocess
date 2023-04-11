@@ -1,36 +1,76 @@
 <?php
-// Include database connection
-include 'db_config.php';
+// Start session
+session_start();
 
-// Select all products from the product table
-$sql = "SELECT * FROM product";
+// Include database connection file
+include('dbconnect.php');
+
+// Query to select all products from the products table
+$sql = "SELECT * FROM products";
+
+// Execute the query and store the result set
 $result = mysqli_query($conn, $sql);
 
-// Check if any products were found
+// Check if there are any products
 if (mysqli_num_rows($result) > 0) {
-	// Display the products in a scrollable list
-	echo '<div style="overflow-y: scroll; height: 400px;">';
+	// Products are available, display them in a scrollable list
+	echo '<h1>Products</h1>';
+	echo '<div style="max-height: 400px; overflow-y: scroll;">';
+	echo '<table>';
+	echo '<thead><tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Quantity</th><th>Action</th></tr></thead>';
+	echo '<tbody>';
 	while ($row = mysqli_fetch_assoc($result)) {
-		echo '<div>';
-		echo '<h3>' . $row['name'] . '</h3>';
-		echo '<p>Description: ' . $row['description'] . '</p>';
-		echo '<p>Price: $' . $row['price'] . '</p>';
-		echo '<form method="post" action="add_to_cart.php">';
-		echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
-		echo '<label for="quantity">Quantity:</label>';
-		echo '<select name="quantity" id="quantity">';
-		for ($i = 1; $i <= 10; $i++) {
+		// Display each product in a row of the table
+		echo '<tr>';
+		echo '<td>' . $row['id'] . '</td>';
+		echo '<td>' . $row['name'] . '</td>';
+		echo '<td>' . $row['description'] . '</td>';
+		echo '<td>' . $row['price'] . '</td>';
+		echo '<td>';
+		echo '<select name="quantity">';
+		for ($i = 1; $i <= $row['quantity']; $i++) {
 			echo '<option value="' . $i . '">' . $i . '</option>';
 		}
 		echo '</select>';
-		echo '<button type="submit" name="add_to_cart">Add to Cart</button>';
-		echo '</form>';
-		echo '</div>';
+		echo '</td>';
+		echo '<td><button onclick="addToCart(' . $row['id'] . ')">Add to Cart</button></td>';
+		echo '</tr>';
 	}
+	echo '</tbody>';
+	echo '</table>';
 	echo '</div>';
 } else {
-	// If no products were found, display an error message
-	echo '<p>No products found.</p>';
+	// No products available
+	echo '<p>No products available.</p>';
 }
+
+// Close database connection
+mysqli_close($conn);
 ?>
 
+<script>
+// Function to add item to cart
+function addToCart(productId) {
+	// Send AJAX request to add item to cart
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'add_to_cart.php', true);
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr.onload = function() {
+		if (this.status == 200) {
+			alert('Item added to cart.');
+		}
+	};
+	xhr.send('productId=' + productId + '&quantity=' + document.getElementsByName('quantity')[productId - 1].value);
+}
+</script>
+
+<!-- Navigation bar for dashboard.php -->
+<nav>
+	<ul>
+		<li><a href="dashboard.php">Home</a></li>
+		<li><a href="product.php">Products</a></li>
+		<li><a href="orders.php">Orders</a></li>
+		<li><a href="about.php">About</a></li>
+		<li><a href="contact.php">Contact Us</a></li>
+	</ul>
+</nav>
