@@ -54,7 +54,7 @@
 						$price = $row2["price"];
 						
 						// Get the product name
-						$sql3 = "SELECT name FROM products WHERE product_id='$product_id'";
+						$sql3 = "SELECT name FROM products WHERE id='$product_id'";
 						$result3 = mysqli_query($conn, $sql3);
 						$row3 = mysqli_fetch_assoc($result3);
 						$product_name = $row3["name"];
