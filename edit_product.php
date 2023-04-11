@@ -17,7 +17,7 @@
 	<h1>Welcome to the Admin Dashboard!</h1>
 	<?php
 // Connect to the database
-include(dbconnect.php);
+include("dbconnect.php");
 
 // Check for errors
 if (!$conn) {
@@ -31,9 +31,10 @@ if (isset($_POST['submit'])) {
 	$name = $_POST['name'];
 	$description = $_POST['description'];
 	$price = $_POST['price'];
+	$available = $_POST['available'];
 
 	// Update the product in the database
-	$sql = "UPDATE product SET name='$name', description='$description', price='$price' WHERE id=$id";
+	$sql = "UPDATE product SET name='$name', description='$description', price='$price', available='$available' WHERE id=$id";
 	$result = mysqli_query($conn, $sql);
 
 	// Check for errors
@@ -63,6 +64,7 @@ $row = mysqli_fetch_assoc($result);
 $name = $row['name'];
 $description = $row['description'];
 $price = $row['price'];
+$available = $row['available'];
 
 // Close the database connection
 mysqli_close($conn);
@@ -77,6 +79,8 @@ mysqli_close($conn);
 	<textarea name="description"><?php echo $description; ?></textarea>
 	<label>Price:</label>
 	<input type="number" name="price" value="<?php echo $price; ?>">
+	<label>Available:</label>
+	<input type="number" name="available" value="<?php echo $available; ?>">
 	<input type="submit" name="submit" value="Save Changes">
 </form>
 
