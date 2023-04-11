@@ -1,60 +1,8 @@
-
-
-<?php
-// Connect to the database
-// Start session
-// Include database connection file
-include('dbconnect.php');
-session_start();
-if (!isset($_SESSION['user_id'])) {
-	header('Location: login.php');
-	exit();
-}
-
-// Handle adding or removing items from the cart
-if (isset($_POST['add_to_cart'])) {
-	// Get the quantity and product ID from the form
-	$quantity = $_POST['quantity'];
-	$product_id = $_POST['product_id'];
-	
-	// Insert the order into the orders table
-	$user_id = $_SESSION['user_id'];
-	$sql = "INSERT INTO orders (user_id, status) VALUES ('$user_id', 'incomplete')";
-	if ($conn->query($sql) === TRUE) {
-		$order_id = $conn->insert_id;
-		
-		// Insert the item into the order_items table
-		$sql = "INSERT INTO order_items (order_id, product_id, quantity) VALUES ('$order_id', '$product_id', '$quantity')";
-		if ($conn->query($sql) === TRUE) {
-			echo "Item added to cart successfully.";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
-		}
-	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
-	}
-} elseif (isset($_POST['remove_from_cart'])) {
-	// Get the order item ID from the form
-	$order_item_id = $_POST['order_item_id'];
-	
-	// Delete the order item from the order_items table
-	$sql = "DELETE FROM order_items WHERE id='$order_item_id'";
-	if ($conn->query($sql) === TRUE) {
-		echo "Item removed from cart successfully.";
-	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
-	}
-}
-
-// Select all items from the product table
-$sql = "SELECT * FROM product";
-$result = $conn->query($sql);
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Products</title>
+	<title>Product Page</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<nav>
@@ -66,46 +14,38 @@ $result = $conn->query($sql);
 			<li><a href="contact.php">Contact Us</a></li>
 		</ul>
 	</nav>
-	
-	<h1>Products</h1>
-	
-	<?php
-	if ($result->num_rows > 0) {
-		// Display each product in a scrollable list
-		echo '<div style="overflow-y: scroll; height: 500px;">';
-		while ($row = $result->fetch_assoc()) {
-			echo '<div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">';
-			echo '<h3>' . $row['name'] . '</h3>';
-			echo '<p>Price: ' . $row['price']
-		. '</p>';
-		echo '<p>Description: ' . $row['description'] . '</p>';
-		echo '<form method="post">';
-		echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
-		echo '<label>Quantity:</label>';
-		echo '<select name="quantity">';
-		for ($i = 1; $i <= 10; $i++) {
-			echo '<option value="' . $i . '">' . $i . '</option>';
-		}
-		echo '</select>';
-		echo '<br>';
-		echo '<button type="submit" name="add_to_cart">Add to Cart</button>';
-		echo '</form>';
-		echo '</div>';
-	}
-	echo '</div>';
-} else {
-	echo "No products found.";
-}
-?>
+	<div class="container">
+		<h1>Products</h1>
+		<form method="post" action="payment.php">
+			<?php
+				// Connect to the database
+				include('dbconnect.php');
+				if (!$conn) {
+				    die("Connection failed: " . mysqli_connect_error());
+				}
 
-<br>
+				// Select all products from the products table
+				$sql = "SELECT * FROM products";
+				$result = mysqli_query($conn, $sql);
 
-<form method="post" action="payment.php">
-	<button type="submit">Proceed to Payment</button>
-</form>
+				// Display all products in a scrollable list
+				while($row = mysqli_fetch_assoc($result)) {
+					echo '<div class="product">';
+					echo '<img src="' . $row['picture'] . '">';
+					echo '<h2>' . $row['name'] . '</h2>';
+					echo '<p>' . $row['description'] . '</p>';
+					echo '<p>$' . $row['price'] . '</p>';
+					echo '<input type="number" min="1" name="quantity[' . $row['id'] . ']" value="1">';
+					echo '<input type="radio" name="selected_product" value="' . $row['id'] . '">';
+					echo '</div>';
+				}
+
+				// Close the database connection
+				mysqli_close($conn);
+			?>
+
+			<button type="submit" name="submit">Proceed to Payment</button>
+		</form>
+	</div>
 </body>
 </html>
-<?php
-// Close the database connection
-$conn->close();
-?>
