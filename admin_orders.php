@@ -37,6 +37,7 @@ $result = $conn->query($sql);
 			$order_id = $row["id"];
 			$date_created = $row["date_created"];
 			$user_id = $row["user_id"];
+			$order_status = $row["status"];
 			$total_price = $row["total_price"];
 			  
 			// Fetch the username of the user who made the order
@@ -46,9 +47,9 @@ $result = $conn->query($sql);
 			$username = $user_row["name"];
 			  
 			// Output the order details and action links
-			echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price";
-			echo "<ul><li><a href='change_order_status.php?order_id=$order_id&status=completed'>Mark as Completed</a></li>";
-			echo "<li><a href='change_order_status.php?order_id=$order_id&status=cancelled'>Cancel Order</a></li></ul></li>";
+			echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price with status being $order_status";
+			echo "<ul><li><a href='change_order_status.php?order_id=$order_id&status=Completed'>Mark as Completed</a></li>";
+			echo "<li><a href='change_order_status.php?order_id=$order_id&status=Cancelled'>Cancel Order</a></li></ul></li>";
 		}
 		echo "</ul>";
 	} else {
@@ -104,6 +105,7 @@ if(isset($_POST['search_user'])) {
 				$order_id = $row["id"];
 				$date_created = $row["date_created"];
 				$user_id = $row["user_id"];
+				$order_status = $row["status"];
 				$total_price = $row["total_price"];
 				
 				// Fetch the username of the user who made the order
@@ -113,9 +115,9 @@ if(isset($_POST['search_user'])) {
 				$username = $user_row["name"];
 				
 				// Output the order details and action links
-				echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price";
-				echo "<ul><li><a href='change_order_status.php?order_id=$order_id&status=completed'>Mark as Completed</a></li>";
-				echo "<li><a href='change_order_status.php?order_id=$order_id&status=cancelled'>Cancel Order</a></li></ul></li>";
+				echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price with status being $order_status";
+				echo "<ul><li><a href='change_order_status.php?order_id=$order_id&status=Completed'>Mark as Completed</a></li>";
+				echo "<li><a href='change_order_status.php?order_id=$order_id&status=Cancelled'>Cancel Order</a></li></ul></li>";
 			}
 			echo "</ul>";
 		} else {
@@ -157,6 +159,7 @@ if(isset($_POST['filter_status'])) {
 				$order_id = $row["id"];
 				$date_created = $row["date_created"];
 				$user_id = $row["user_id"];
+				$order_status = $row["status"];
 				$total_price = $row["total_price"];
 				
 				// Fetch the username of the user who made the order
@@ -166,9 +169,9 @@ if(isset($_POST['filter_status'])) {
 				$username = $user_row["username"];
 				
 				// Output the order details and action links
-				echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price";
-				echo "<ul><li><a href='change_order_status.php?order_id=$order_id&status=completed'>Mark as Completed</a></li>";
-				echo "<li><a href='change_order_status.php?order_id=$order_id&status=cancelled'>Cancel Order</a></li></ul></li>";
+				echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price with status being $order_status";
+				echo "<ul><li><a href='change_order_status.php?order_id=$order_id&status=Completed'>Mark as Completed</a></li>";
+				echo "<li><a href='change_order_status.php?order_id=$order_id&status=Cancelled'>Cancel Order</a></li></ul></li>";
 			}
 			echo "</ul>";
 			} else {
@@ -204,7 +207,7 @@ if ($result->num_rows > 0) {
 		$username = $user_row["username"];
 		
 		// Output the order details and action links
-		echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price";
+		echo "<li>Order #$order_id created on $date_created by $username for a total of $$total_price  with status being $order_status";
 		echo "<ul><li><a href='change_order_status.php?order_id=$order_id&status=completed'>Mark as Completed</a></li>";
 		echo "<li><a href='change_order_status.php?order_id=$order_id&status=cancelled'>Cancel Order</a></li></ul></li>";
 	}
