@@ -77,4 +77,35 @@ $result = $conn->query($sql);
 			echo '<div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">';
 			echo '<h3>' . $row['name'] . '</h3>';
 			echo '<p>Price: ' . $row['price']
+		. '</p>';
+		echo '<p>Description: ' . $row['description'] . '</p>';
+		echo '<form method="post">';
+		echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
+		echo '<label>Quantity:</label>';
+		echo '<select name="quantity">';
+		for ($i = 1; $i <= 10; $i++) {
+			echo '<option value="' . $i . '">' . $i . '</option>';
+		}
+		echo '</select>';
+		echo '<br>';
+		echo '<button type="submit" name="add_to_cart">Add to Cart</button>';
+		echo '</form>';
+		echo '</div>';
+	}
+	echo '</div>';
+} else {
+	echo "No products found.";
+}
+?>
 
+<br>
+
+<form method="post" action="payment.php">
+	<button type="submit">Proceed to Payment</button>
+</form>
+</body>
+</html>
+<?php
+// Close the database connection
+$conn->close();
+?>
