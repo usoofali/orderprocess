@@ -19,12 +19,7 @@
 		<h1>Payment</h1>
 		<?php
 			// Connect to the database
-			$servername = "localhost";
-			$username = "username";
-			$password = "password";
-			$dbname = "order";
-
-			$conn = mysqli_connect($servername, $username, $password, $dbname);
+			include('dbconnect.php');
 			if (!$conn) {
 			    die("Connection failed: " . mysqli_connect_error());
 			}
