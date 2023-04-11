@@ -5,14 +5,15 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="navbar">
-		<a href="#">Home</a>
-		<a href="#">Product</a>
-		<a class="active" href="#">Payment</a>
-		<a href="#">Orders</a>
-		<a href="#">About</a>
-		<a href="#">Contact Us</a>
-	</div>
+	<<nav>
+		<ul>
+			<li><a href="dashboard.php">Home</a></li>
+			<li><a href="product.php">Products</a></li>
+			<li><a href="orders.php">Orders</a></li>
+			<li><a href="about.php">About</a></li>
+			<li><a href="contact.php">Contact Us</a></li>
+		</ul>
+	</nav>
 
 	<div class="container">
 		<h1>Payment</h1>
