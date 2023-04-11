@@ -38,7 +38,8 @@
 			    	$quantity = $_POST['quantity'][$product_id];
 				$sql = "SELECT * FROM product WHERE id='$product_id'";
 				$result = mysqli_query($conn, $sql);
-				$total_price = $result['price'] * $quantity;
+				$row3 = mysqli_fetch_assoc($result);
+				$total_price = $row3['price'] * $quantity;
 				$total_order_price = $total_order_price + $total_price;
 			    	$sql = "INSERT INTO order_items (order_id, product_id, quantity,total_price) VALUES ($order_id, $product_id, $quantity,$total_price)";
 			    	mysqli_query($conn, $sql);
