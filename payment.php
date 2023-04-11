@@ -30,18 +30,26 @@
 			$sql = "INSERT INTO orders (user_id, status) VALUES ($user_id, 'paid')";
 			if (mysqli_query($conn, $sql)) {
 			    $order_id = mysqli_insert_id($conn);
+			    $total_order_price = 0;
 
 			    // Insert the order items into the order_items table
+				
 			    foreach ($_POST['selected_product'] as $product_id) {
 			    	$quantity = $_POST['quantity'][$product_id];
-				$price = 
-			    	$sql = "INSERT INTO order_items (order_id, product_id, quantity) VALUES ($order_id, $product_id, $quantity)";
+				$sql = "SELECT * FROM product WHERE id='$product_id'";
+				$result = mysqli_query($conn, $sql);
+				$total_price = $result['price'] * $quantity;
+				$total_order_price = $total_order_price + $total_price;
+			    	$sql = "INSERT INTO order_items (order_id, product_id, quantity,total_price) VALUES ($order_id, $product_id, $quantity,$total_price)";
 			    	mysqli_query($conn, $sql);
 			    }
 
 			    // Update the order status to "complete"
 // 			    $sql = "UPDATE orders SET status='complete' WHERE id=$order_id";
 // 			    mysqli_query($conn, $sql);
+				// Update the order status to "complete"
+			    $sql = "UPDATE orders SET total_price=$total_order_price WHERE id=$order_id";
+			    mysqli_query($conn, $sql);
 
 			    // Display a message to the user confirming the purchase
 			    echo '<p>Thank you for making the order!</p>';
