@@ -31,7 +31,7 @@
 				// Display all products in a scrollable list
 				while($row = mysqli_fetch_assoc($result)) {
 					echo '<div class="product">';
-					echo '<img src="' . $row['picture'] . '">';
+					echo '<img src="' . $row['image'] . '">';
 					echo '<h2>' . $row['name'] . '</h2>';
 					echo '<p>' . $row['description'] . '</p>';
 					echo '<p>$' . $row['price'] . '</p>';
